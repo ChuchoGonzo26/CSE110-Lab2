@@ -22,7 +22,11 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView display;
     private Button[] numBtns = new Button[10];
-    private Button btnDot, btnPlus, btnTimes, btnEquals, btnClear;
+    private Button btnDot;
+    private Button btnPlus;
+    private Button btnTimes;
+    private Button btnEquals;
+    private Button btnClear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
         // Clear the pending operation and update the display.
         pendingOp = Optional.empty();
         displayStr = String.valueOf(result);
-        trimDisplayStr();
+        displayStr = Utilities.trimDisplayStr(displayStr);
         updateDisplay();
     }
 
@@ -147,22 +151,5 @@ public class MainActivity extends AppCompatActivity {
     private void clearDisplay() {
         displayStr = "0";
         updateDisplay();
-    }
-
-    private void trimDisplayStr() {
-        // If the string does not contain a decimal point, don't do anything.
-        if (!displayStr.contains(".")) {
-            return;
-        }
-        // Trim off any extra "0s" at the end.
-        var cleanedStr = displayStr;
-        while (cleanedStr.endsWith("0")) {
-            cleanedStr = cleanedStr.substring(0, cleanedStr.length() - 1);
-        }
-        // And now if it ends with a ".", trim that too.
-        if (cleanedStr.endsWith(".")) {
-            cleanedStr = cleanedStr.substring(0, cleanedStr.length() - 1);
-        }
-        displayStr = cleanedStr;
     }
 }
